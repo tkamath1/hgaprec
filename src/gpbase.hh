@@ -416,6 +416,7 @@ GPMatrix::load()
   _Ev.load(fname);
   _scurr.load(shape_fname);
   _rcurr.load(rate_fname);
+  compute_expectations();
 }
 
 inline void
