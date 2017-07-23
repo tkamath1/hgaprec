@@ -411,7 +411,11 @@ inline void
 GPMatrix::load()
 {
   string fname = name() + ".tsv";
+  string shape_fname = name() + "_shape.tsv";
+  string rate_fname = name() + "_rate.tsv";
   _Ev.load(fname);
+  _scurr.load(shape_fname);
+  _rcurr.load(rate_fname);
 }
 
 inline void
@@ -982,8 +986,10 @@ GPArray::save_state(const IDMap &m) const
 inline void
 GPArray::load()
 {
+  string expv_fname = name() + ".tsv";
   string shape_fname = name() + "_shape.tsv";
   string rate_fname = name() + "_rate.tsv";
+  _Ev.load(expv_fname);
   _scurr.load(shape_fname);
   _rcurr.load(rate_fname);
   compute_expectations();

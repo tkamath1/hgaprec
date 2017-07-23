@@ -185,16 +185,18 @@ void HGAPRec::initialize()
 		_thetarate.initialize2(_k);
 		_thetarate.compute_expectations();
 
-		_betarate.initialize2(_k);
-		_betarate.compute_expectations();
+		if (!_env.beta_precomputed) {
+			_betarate.initialize2(_k);
+			_betarate.compute_expectations();
 
-		//_betarate.set_to_prior_curr();
-		//_betarate.set_to_prior();
-		//_hbeta.initialize2(_n);
-		//_hbeta.compute_expectations();
+			//_betarate.set_to_prior_curr();
+			//_betarate.set_to_prior();
+			//_hbeta.initialize2(_n);
+			//_hbeta.compute_expectations();
 
-		_hbeta.initialize();
-		_hbeta.initialize_exp();
+			_hbeta.initialize();
+			_hbeta.initialize_exp();
+		}
 
 		//_hbeta.initialize_exp(_betarate.expected_v()[0]);
 		//_htheta.initialize2(_m);
@@ -211,8 +213,10 @@ void HGAPRec::initialize()
 		_thetabias.initialize2(_m);
 		_thetabias.compute_expectations();
 
-		_betabias.initialize2(_n);
-		_betabias.compute_expectations();
+		if (!_env.beta_precomputed) {
+			_betabias.initialize2(_n);
+			_betabias.compute_expectations();
+		}		
 	}
 }
 
