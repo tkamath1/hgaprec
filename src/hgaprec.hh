@@ -5,7 +5,8 @@
 #include "ratings.hh"
 #include "gpbase.hh"
 
-class HGAPRec {
+class HGAPRec
+{
 public:
   HGAPRec(Env &env, Ratings &ratings);
   ~HGAPRec();
@@ -26,9 +27,8 @@ public:
   void run_chi_nmf();
   void run_chi_sgd();
   void run_chi_als();
-  void run_chi_wals(double l);
   void run_chi_climf();
-  
+
   void gen_ranking_for_users(bool load_model_state);
   void gen_msr_csv();
 
@@ -45,33 +45,34 @@ public:
   void load_vwlda_beta_and_theta();
   void load_chi_beta_and_theta();
   void load_ctr_beta_and_theta();
+  void load_beta();
   void test();
-  
+
 private:
   void initialize();
   void approx_log_likelihood();
-  
-  void get_phi(GPBase<Matrix> &a, uint32_t ai, 
-	       GPBase<Matrix> &b, uint32_t bi, 
-	       Array &phi);
 
-  void get_phi(GPBase<Matrix> &a, uint32_t ai, 
-	       GPBase<Matrix> &b, uint32_t bi, 
-	       double biasa, double biasb,
-	       Array &phi);
-  void get_phi(Matrix &a, uint32_t ai, 
-	       GPBase<Matrix> &b, uint32_t bi, 
-	       Array &phi);
-  
-  void get_phi(GPBase<Matrix> &a, uint32_t ai, 
-	       Matrix &b, uint32_t bi, 
-	       Array &phi);
+  void get_phi(GPBase<Matrix> &a, uint32_t ai,
+               GPBase<Matrix> &b, uint32_t bi,
+               Array &phi);
+
+  void get_phi(GPBase<Matrix> &a, uint32_t ai,
+               GPBase<Matrix> &b, uint32_t bi,
+               double biasa, double biasb,
+               Array &phi);
+  void get_phi(Matrix &a, uint32_t ai,
+               GPBase<Matrix> &b, uint32_t bi,
+               Array &phi);
+
+  void get_phi(GPBase<Matrix> &a, uint32_t ai,
+               Matrix &b, uint32_t bi,
+               Array &phi);
 
   void load_validation_and_test_sets();
   void compute_likelihood(bool validation);
   double pair_likelihood(uint32_t p, uint32_t q, yval_t y) const;
-  double log_factorial(uint32_t n)  const;
-  
+  double log_factorial(uint32_t n) const;
+
   void do_on_stop();
   void compute_precision(bool save_ranking_file);
 
@@ -98,7 +99,7 @@ private:
   uint32_t _m;
   uint32_t _k;
   uint32_t _iter;
-  
+
   GPMatrixGR _theta;
   GPMatrixGR _beta;
 
@@ -115,7 +116,7 @@ private:
   Matrix _beta_mle;
   Matrix _old_theta_mle;
   Matrix _old_beta_mle;
-  
+
   CountMap _validation_map;
   CountMap _test_map;
   FreqMap _validation_users_of_movie;
@@ -171,7 +172,7 @@ HGAPRec::duration() const
 inline bool
 HGAPRec::is_validation(const Rating &r) const
 {
-  assert (r.first  < _n && r.second < _m);
+  assert(r.first < _n && r.second < _m);
   CountMap::const_iterator itr = _validation_map.find(r);
   if (itr != _validation_map.end())
     return true;

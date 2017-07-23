@@ -58,6 +58,7 @@ Ratings::read_generic_train(string dir)
     read_generic(f, NULL);
   fclose(f);
   Env::plog("training ratings", _nratings);
+  return 0;
 }
 
 int
@@ -149,6 +150,7 @@ Ratings::read_nyt_titles(string dir)
   }
   fclose(f);
   Env::plog("read titles", c);
+  return 0;
 }
 
 int
@@ -235,7 +237,7 @@ Ratings::write_marginal_distributions()
       t += y;
     }
     x = 0;
-    fprintf(f, "%d\t%d\t%d\t%d\n", n, it->second, movies->size(), t);
+    fprintf(f, "%d\t%d\t%lu\t%d\n", n, it->second, movies->size(), t);
     nusers++;
   }
   fclose(f);
@@ -260,7 +262,7 @@ Ratings::write_marginal_distributions()
       t += y;
     }
     x = 0;
-    fprintf(f, "%d\t%d\t%d\t%d\n", n, it->second, users->size(), t);
+    fprintf(f, "%d\t%d\t%lu\t%d\n", n, it->second, users->size(), t);
     nitems++;
   }
   fclose(f);
@@ -268,6 +270,7 @@ Ratings::write_marginal_distributions()
   lerr("longest sequence of items with no users: %d", x);
   Env::plog("post pruning nusers:", _env.n);
   Env::plog("post pruning nitems:", _env.m);
+  return 0;
 }
 
 int
@@ -578,7 +581,7 @@ Ratings::read_netflix_movie(string dir, uint32_t movie)
   uint32_t uid = 0, rating = 0;
   char b[128];
   while (!feof(f)) {
-    if (fscanf(f, "%u,%u,%*s\n", &uid, &rating, b) < 0) {
+    if (fscanf(f, "%u,%u,%s\n", &uid, &rating, b) < 0) {
 	printf("error: unexpected lines in file\n");
 	fclose(f);
 	exit(-1);
@@ -679,7 +682,7 @@ Ratings::read_movielens_metadata(string dir)
 {
   uint32_t n = 0;
   char buf[1024];
-  sprintf(buf, "movies.tsv", dir.c_str());
+  sprintf(buf, "movies.tsv");
   FILE *f = fopen(buf, "r");
   assert(f);
   uint32_t id;
@@ -725,7 +728,7 @@ Ratings::read_netflix_metadata(string dir)
 {
   uint32_t n = 0;
   char buf[1024];
-  sprintf(buf, "movie_titles.txt", dir.c_str());
+  sprintf(buf, "movie_titles.txt");
   FILE *f = fopen(buf, "r");
   assert(f);
   uint32_t id, year;
@@ -788,6 +791,7 @@ Ratings::read_mendeley_metadata(string dir)
   }
   lerr("read %d lines\n", n);
   free(line);
+  return 0;
 }
 
 

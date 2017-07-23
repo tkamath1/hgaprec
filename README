@@ -18,16 +18,36 @@ Installation
 
 Required libraries: gsl, gslblas, pthread
 
-On Linux/Unix run
+On Linux/Unix:
 
+```
  ./configure
  make; make install
+```
 
-On Mac OS, the location of the required gsl, gslblas and pthread
-libraries may need to be specified:
+On Mac OS (tested on Sierra):
 
- ./configure LDFLAGS="-L/opt/local/lib" CPPFLAGS="-I/opt/local/include"
- make; make install
+1. Install [Homebrew](https://brew.sh) if you haven't already.
+
+2. Install dependencies:
+
+```
+brew install gsl
+brew install arpack
+```
+
+3. Configure, and tell `make` not to worry about dependencies:
+
+```
+./configure --disable-dependency-tracking
+```
+
+4. Make and install:
+
+```
+make
+make install
+```
 
 The binary 'gaprec' will be installed in /usr/local/bin unless a
 different prefix is provided to configure. (See INSTALL.)
