@@ -1555,7 +1555,7 @@ void HGAPRec::compute_likelihood(bool validation)
 	fprintf(f, "%d\t%d\t%.5f\t%d\n",
 			_iter, duration(), a, why);
 	fclose(f);
-	if (stop)
+	if (stop && _iter >= 250)
 	{
 		do_on_stop();
 		exit(0);
