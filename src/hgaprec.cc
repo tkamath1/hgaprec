@@ -16,8 +16,8 @@ HGAPRec::HGAPRec(Env &env, Ratings &ratings)
 	  _betabias("betabias", 0.3, 0.3, _m, 1, &_r),
 	  _htheta("htheta", 0.3, 0.3, _n, _k, &_r),
 	  _hbeta("hbeta", 0.3, 0.3, _m, _k, &_r),
-	  _thetarate("thetarate", 0.3, 0.3, _n, &_r),
-	  _betarate("betarate", 0.3, 0.3, _m, &_r),
+	  _thetarate("thetarate", env.a, env.a/env.b, _n, &_r),
+	  _betarate("betarate", env.c, env.c/env.d, _m, &_r),
 	  _theta_mle(_n, _k),
 	  _beta_mle(_m, _k),
 	  _old_theta_mle(_n, _k),
@@ -419,14 +419,14 @@ void HGAPRec::save_model()
 		_theta.save_state(_ratings.seq2user());
 	}
 
-	if (_env.bias)
-	{
-		_betabias.save_state(_ratings.seq2movie());
-		_thetabias.save_state(_ratings.seq2user());
-	}
-	if (_env.canny || _env.mle_user || _env.mle_item)
-	{
-		_theta_mle.save(Env::file_str("/theta_mle.tsv"), _ratings.seq2user());
-		_beta_mle.save(Env::file_str("/beta_mle.tsv"), _ratings.seq2movie());
-	}
+	//	if (_env.bias)
+	//{
+	//	_betabias.save_state(_ratings.seq2movie());
+	//	_thetabias.save_state(_ratings.seq2user());
+	//}
+	//if (_env.canny || _env.mle_user || _env.mle_item)
+	//{
+	//	_theta_mle.save(Env::file_str("/theta_mle.tsv"), _ratings.seq2user());
+	//	_beta_mle.save(Env::file_str("/beta_mle.tsv"), _ratings.seq2movie());
+	//}
 }

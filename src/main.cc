@@ -36,8 +36,9 @@ int main(int argc, char **argv)
 	signal(SIGTERM, term_handler);
 	if (argc <= 1)
 	{
-		printf("hgaprec -dir <netflix-dataset-dir> -n <users>"
-			   "-m <movies> -k <dims> -label <out-dir-tag>\n");
+		printf("hgaprec -dir <netflix-dataset-dir> -n <users>\n"
+			   "-m <movies> -k <dims> -a <hyperparameter-(hypp)-a> -b <hypp-b> -c <hypp-c> -d <hypp-d>"
+                           " -label <out-dir-tag>\n");
 		exit(0);
 	}
 
