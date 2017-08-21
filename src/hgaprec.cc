@@ -94,7 +94,7 @@ HGAPRec::HGAPRec(Env &env, Ratings &ratings)
 	Env::plog("thetarate rate:", _thetarate.rprior());
 
 	Env::plog("betarate shape:", _betarate.sprior());
-	Env::plog("betarate rate:", _thetarate.rprior());
+	Env::plog("betarate rate:", _betarate.rprior());
 }
 
 HGAPRec::~HGAPRec()
@@ -112,11 +112,8 @@ void HGAPRec::load_validation_and_test_sets()
 	char buf[4096];
 	sprintf(buf, "%s/validation.tsv", _env.datfname.c_str());
 	FILE *validf = fopen(buf, "r");
-	assert(validf);
-	if (_env.dataset == Env::NYT)
-		_ratings.read_nyt_train(validf, &_validation_map);
-	else
-		_ratings.read_generic(validf, &_validation_map);
+	assert(validf);	
+	_ratings.read_generic(validf, &_validation_map);
 	fclose(validf);
 
 	for (CountMap::const_iterator i = _validation_map.begin();
@@ -129,10 +126,7 @@ void HGAPRec::load_validation_and_test_sets()
 	sprintf(buf, "%s/test.tsv", _env.datfname.c_str());
 	FILE *testf = fopen(buf, "r");
 	assert(testf);
-	if (_env.dataset == Env::NYT)
-		_ratings.read_nyt_train(testf, &_test_map);
-	else
-		_ratings.read_generic(testf, &_test_map);
+       	_ratings.read_generic(testf, &_test_map);
 	fclose(testf);
 
 	// XXX: keeps one heldout test item for each user

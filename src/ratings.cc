@@ -51,11 +51,11 @@ Ratings::read_generic_train(string dir)
     exit(-1);
   }
 
-  if (_env.dataset == Env::NYT) {
-    read_nyt_titles(dir);
-    read_nyt_train(f, NULL);
-  } else
-    read_generic(f, NULL);
+  //if (_env.dataset == Env::NYT) {
+  //  read_nyt_titles(dir);
+  //  read_nyt_train(f, NULL);
+  //} else
+  read_generic(f, NULL);
   fclose(f);
   Env::plog("training ratings", _nratings);
   return 0;
